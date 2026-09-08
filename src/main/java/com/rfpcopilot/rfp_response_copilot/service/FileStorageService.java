@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileStorageService {
 	
 	private final Path storageLocation = Paths.get("storage/rfps");
+	private final Path knowledgeDocumentStorageLocation = Paths.get("storage/knowledgeDocument");
 	
 	public String store(Long rfpId, MultipartFile document) throws IOException
 	{
@@ -28,6 +29,22 @@ public class FileStorageService {
 					StandardCopyOption.REPLACE_EXISTING);
 		
 		return destination.toString();
+	}
+	
+	public String storeKnowledgeDoc(Long kdId,MultipartFile document) throws IOException
+	{
+		Path destination = knowledgeDocumentStorageLocation.resolve("kd-"+kdId);
+		
+		Files.createDirectories(destination);
+		
+		String originalName = document.getName();
+		
+		destination = destination.resolve(originalName);
+		
+		Files.copy(document.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+		
+		return destination.toString();
+		
 	}
 
 }

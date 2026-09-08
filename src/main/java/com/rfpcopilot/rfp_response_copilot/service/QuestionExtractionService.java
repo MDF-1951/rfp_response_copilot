@@ -30,30 +30,45 @@ public class QuestionExtractionService {
 	public List<ExtractedQuestion> extractQuestions(String docText)
 	{
 		String prompt = """
-                You are an RFP document analysis system.
+		        You are an expert RFP question extraction system.
 
-                Extract all questions and information requests from the following RFP text.
+		        Analyze the RFP document below and extract every item that requires
+		        the vendor/respondent to provide information, an answer, explanation,
+		        document, evidence, proposal, or other response.
 
-                For every question, identify:
-                - questionText
-                - section
-                - questionNumber
+		        IMPORTANT:
+		        - Do NOT only look for sentences ending with '?'.
+		        - RFP requirements written as instructions such as
+		          "Provide...", "Describe...", "Submit...", "Explain...",
+		          "List...", "Specify..." should also be extracted when they
+		          require a substantive vendor response.
+		        - Ignore purely administrative instructions such as submission
+		          deadlines, number of copies, file format, mailing instructions,
+		          signatures, etc.
+		        - Preserve the original meaning of each requirement.
+		        - Extract as many relevant response items as possible.
+		        - Do not invent questions that are not present in the document.
 
-                Return ONLY valid JSON in this exact structure:
+		        For every extracted item return:
+		        - questionText
+		        - section
+		        - questionNumber
 
-                {
-                  "questions": [
-                    {
-                      "questionText": "...",
-                      "section": "...",
-                      "questionNumber": "..."
-                    }
-                  ]
-                }
+		        Return ONLY valid JSON in this exact structure:
 
-                RFP DOCUMENT:
-                %s
-                """.formatted(docText);
+		        {
+		          "questions": [
+		            {
+		              "questionText": "...",
+		              "section": "...",
+		              "questionNumber": "..."
+		            }
+		          ]
+		        }
+
+		        RFP DOCUMENT:
+		        %s
+		        """.formatted(docText);
 		
 		String response = chatModel.chat(prompt);
 		

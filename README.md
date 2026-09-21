@@ -57,55 +57,55 @@ It also stores the generated answers and their status back against the correspon
                          └──────────────────────┘
 
 
-Knowledge Documents
-       │
-       ▼
-┌──────────────────────┐
-│ Apache Tika / Text   │
-│ Extraction           │
-└──────────┬───────────┘
-           ▼
-┌──────────────────────┐
-│ Text Chunking        │
-└──────────┬───────────┘
-           ▼
-┌──────────────────────┐
-│ BGE-small-en-v1.5    │
-│ Local Embeddings     │
-└──────────┬───────────┘
-           ▼
-      Elasticsearch
-   ┌───────────────────┐
-   │ Text + Embeddings │
-   │ + Metadata        │
-   └───────────────────┘
-
-
-RFP Question
-     │
-     ▼
-┌───────────────┐      ┌──────────────────┐
-│ BM25 Search   │      │ Vector Search    │
-└───────┬───────┘      └────────┬─────────┘
-        │                       │
-        └───────────┬───────────┘
-                    ▼
-             RRF Hybrid Search
-                    │
-                    ▼
-             Top Relevant Chunks
-                    │
-                    ▼
-             Context Builder
-                    │
-                    ▼
-                 LLM / RAG
-                    │
-                    ▼
-             Grounded Answer
-                    │
-                    ▼
-              PostgreSQL
+                          Knowledge Documents
+                                 │
+                                 ▼
+                          ┌──────────────────────┐
+                          │ Apache Tika / Text   │
+                          │ Extraction           │
+                          └──────────┬───────────┘
+                                     ▼
+                          ┌──────────────────────┐
+                          │ Text Chunking        │
+                          └──────────┬───────────┘
+                                     ▼
+                          ┌──────────────────────┐
+                          │ BGE-small-en-v1.5    │
+                          │ Local Embeddings     │
+                          └──────────┬───────────┘
+                                     ▼
+                                Elasticsearch
+                             ┌───────────────────┐
+                             │ Text + Embeddings │
+                             │ + Metadata        │
+                             └───────────────────┘
+                    
+                    
+                      RFP Question
+                           │
+                           ▼
+                      ┌───────────────┐      ┌──────────────────┐
+                      │ BM25 Search   │      │ Vector Search    │
+                      └───────┬───────┘      └────────┬─────────┘
+                              │                       │
+                              └───────────┬───────────┘
+                                          ▼
+                                   RRF Hybrid Search
+                                          │
+                                          ▼
+                                   Top Relevant Chunks
+                                          │
+                                          ▼
+                                   Context Builder
+                                          │
+                                          ▼
+                                       LLM / RAG
+                                          │
+                                          ▼
+                                   Grounded Answer
+                                          │
+                                          ▼
+                                    PostgreSQL
 ```
 
 ---

@@ -78,5 +78,10 @@ public class RfpService {
 		
 		
 	}
+	
+	public List<RfpQuestion> getQAnswers(Long id)
+	{
+		return rfpQRepo.findByRfpId(id);
+	}
 
 }
